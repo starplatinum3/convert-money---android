@@ -32,6 +32,8 @@ public class JSONParser {
             Log.d("test",httpResponse.toString());
             HttpEntity httpEntity = httpResponse.getEntity();
             sInputStream = httpEntity.getContent();
+            Log.d("sInputStream", String.valueOf(sInputStream));
+//            抓住错误了之后 会执行 下面的 那肯定是有null啊
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         } catch (ClientProtocolException e) {
@@ -52,6 +54,7 @@ public class JSONParser {
             }
             sInputStream.close();
             sRawJsonString = stringBuilder.toString();
+            Log.d("sRawJsonString", "getJSONFromUrl: "+sRawJsonString);
         } catch (Exception e) {
             Log.e("Error from Buffer: " + e.toString(),
                     this.getClass().getSimpleName());

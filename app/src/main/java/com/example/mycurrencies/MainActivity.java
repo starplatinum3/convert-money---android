@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +23,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+//import android.widget.Toolbar;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,15 +37,22 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Properties;
-
-public class MainActivity extends Activity implements AdapterView.OnItemSelectedListener {
+//extends AppCompatActivity
+//public class MainActivity extends Activity implements AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private Button mCalcButton;
     private TextView mConvertedTextView;
     private EditText mAmountEditText;
     private Spinner mForSpinner,mHomSpinner;
     private String[] mCurrencies;
+    /**
+     * forign  外国
+     */
     public static final String FOR = "FOR_CURRENCY";
+    /**
+     * home
+     */
     public static final String HOM = "HOM_CURRENCY";
 
     private String mKey;
@@ -59,6 +71,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         mForSpinner = (Spinner) findViewById(R.id.spn_for);
         mHomSpinner = (Spinner) findViewById(R.id.spn_hom);
 
+//        Toolbar toolbar=(Toolbar) findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
         // 取到货币
         ArrayList<String> arrayList = (
@@ -79,8 +93,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         mHomSpinner.setOnItemSelectedListener(this);
         mForSpinner.setOnItemSelectedListener(this);
 
-        //怕判断是否存在个性化的本币和外币数据
-        if(savedInstanceState == null && (PrefsMgr.getString(this,FOR)==null) && (PrefsMgr.getString(this,HOM)==null)){
+        //判断是否存在个性化的本币和外币数据
+//        FOR 外国
+//        HOM home
+        if(savedInstanceState == null && (PrefsMgr.getString(this,FOR)==null)
+                && (PrefsMgr.getString(this,HOM)==null)){
             mForSpinner.setSelection(findPositionGivenCode("USD",mCurrencies));
             mHomSpinner.setSelection(findPositionGivenCode("CNY",mCurrencies));
             PrefsMgr.setString(this,FOR,"USD");
@@ -117,6 +134,14 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+//        return super.onCreateOptionsMenu(menu);
+
+        return true;
+    }
+
     private void invertCurrencies() {
         int nFor = mForSpinner.getSelectedItemPosition();
         int nHom = mHomSpinner.getSelectedItemPosition();
@@ -132,6 +157,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         int id = item.getItemId();
         switch (id){
             case R.id.mnu_invert:
+//                转换
                 invertCurrencies();
                 //TODO define behavior here
                 break;
