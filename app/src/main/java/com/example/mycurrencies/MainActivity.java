@@ -165,6 +165,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 //TODO define behavior here
                 launchBrowser(SplashActivity.URL_CODES);
                 break;
+            case R.id.mnu_record:
+                //TODO define behavior here
+                Intent intent = new Intent(this, RecordActivity.class);
+                startActivity(intent);
+//                launchBrowser(SplashActivity.URL_CODES);
+                break;
             case R.id.mnu_exit:
                 finish();
                 break;
